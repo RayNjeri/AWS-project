@@ -85,41 +85,53 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var main = exports.main = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(event, context, callback) {
-    var params, result;
+    var data, params, result;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            data = JSON.parse(event.body);
             params = {
               TableName: "notes",
-              // 'KeyConditionExpression' defines the condition for the query // - 'userId = :userId': only return items with matching 'userId' // partition key
-              // 'ExpressionAttributeValues' defines the value in the condition // - ':userId': defines 'userId' to be Identity Pool identity id // of the authenticated user
-              KeyConditionExpression: "userId = :userId",
+              // 'Key' defines the partition key and sort key of the item to be updated
+              //- 'userId': Identity Pool identity id of the authenticated user
+              // - 'noteId': path parameter
+              Key: {
+                userId: event.requestContext.identity.cognitoIdentityId,
+                noteId: event.pathParameters.id
+                // 'UpdateExpression' defines the attributes to be updated
+                // 'ExpressionAttributeValues' defines the value in the update expression
+              },
+              UpdateExpression: "SET content = :content, attachment = :attachement",
               ExpressionAttributeValues: {
-                ":userId": event.requestContext.identity.cognitoIdentityId
-              }
+                ":attachment": data.attachment ? data.attachment : null,
+                ":content": data.content ? data.content : null
+              },
+              ReturnValues: "ALL_NEW"
             };
-            _context.prev = 1;
-            _context.next = 4;
-            return dynamoDbLib.call("query", params);
+            _context.prev = 2;
+            _context.next = 5;
+            return dynamoDbLib.call("update", params);
 
-          case 4:
+          case 5:
             result = _context.sent;
-            _context.next = 10;
+
+            callback(null, (0, _responseLib.success)({ status: true }));
+            _context.next = 12;
             break;
 
-          case 7:
-            _context.prev = 7;
-            _context.t0 = _context["catch"](1);
+          case 9:
+            _context.prev = 9;
+            _context.t0 = _context["catch"](2);
 
             callback(null, (0, _responseLib.failure)({ status: false }));
 
-          case 10:
+          case 12:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, this, [[1, 7]]);
+    }, _callee, this, [[2, 9]]);
   }));
 
   return function main(_x, _x2, _x3) {
