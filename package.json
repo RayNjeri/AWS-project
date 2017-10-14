@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/RayNjeri/AWS-project/issues"
   },
-  "homepage": "https://github.com/RayNjeri/AWS-project#readme"
+  "homepage": "https://github.com/RayNjeri/AWS-project#readme",
+  "keywords": [],
+  "devDependencies": {
+    "aws-sdk": "^2.133.0"
+  },
+  "dependencies": {
+    "uuid": "^3.1.0"
+  }
 }
