@@ -1,6 +1,14 @@
 This repo is for the serverless backend API 
 #### Steps
 
+- [Set up the Serverless Framework]
+- [Add Support for ES6/ES7 JavaScript]
+- [Add a Create Note API]
+- [Add a Get Note API]
+- [Add a List All the Notes API]
+- [Add an Update Note API]
+- [Add a Delete Note API]
+
 
 #### Usage
 
